@@ -2,45 +2,50 @@
 Representational State Transfer (REST), em português Transferência Representacional de Estado, é um estilo de arquitetura de software que define um conjunto de restrições a serem usadas para a criação de web services (serviços Web). Os Web services que estão em conformidade com o estilo arquitetural REST, denominados Web services RESTful, fornecem interoperabilidade entre sistemas de computadores na Internet.
 Os Web services RESTful permitem que os sistemas solicitantes acessem e manipulem representações textuais de recursos da Web usando um conjunto uniforme e predefinido de operações sem estado. Outros tipos de Web services, como Web services SOAP, expõem seus próprios conjuntos de operações arbitrários.
 
-## Jersey Overview
-Developing RESTful Web services that seamlessly support exposing your data in a variety of representation media types and abstract away the low-level details of the client-server communication is not an easy task without a good toolkit. In order to simplify development of RESTful Web services and their clients in Java, a standard and portable JAX-RS API has been designed. Jersey RESTful Web Services framework is open source, production quality, framework for developing RESTful Web Services in Java that provides support for JAX-RS APIs and serves as a JAX-RS (JSR 311 & JSR 339) Reference Implementation.
+# Objectivos
+Desenvolver uma API RESTful que permita gerenciar as informações das propriedades dos países (identificador – gerado automaticamente, nome, capital, região, sub-região, área).
 
+* Deve ser possível criar um novo país a partir da API criada com todas as suas propriedades;
+* Deve ser possível listar todos os países anteriormente criados;
+* Deve ser possível modificar os dados de um país anteriormente criado;
+* Deve ser possível eliminar um país anteriormente criado;
+* Deve ser possível ordenar a lista dos países por qualquer uma das suas propriedades.
 
-## Setting Up Application Server(Apache Tomcat)
+# Requisitos
+1. Java 8
+2. JDK 1.8
+3. Tomcat 8
+4. Mysql
 
-Before going to configure Tomcat Server on your system donwload latest version of it and extract files from. [Click here to donwload latest version of Tomcat 9.0.x](http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz)
+# Instalação
+1. Clone o repositório
+```
+  git clone https://github.com/Guirande/RestAPI-2ibi.git
+```
+2. Altere as propriedades do ficheiro `db.properties` do pacote `tk.meceap.db.dao` para a conexao com a base de dados;
+    **Nota:** A aplicação se encarregará de criar a base de dados e respetivas tabelas;
+3. Faça a implantação/deploy da aplicação clonada para testes locais;
+4. Faça (limpar e construir)/(clean and building) para obter o arquivo `.war`, arquivo que será usado no gerenciador de servidor tomcat em ambiente de produção;
+5. Faça o upload do arquivo `.war` na pasta `/dist` no servidor tomcat.
 
-**Go To IntelliJ Welcome screen and click On Configure**
-
-1. Open the Settings/Preferences dialog Ctrl+Alt+S
-2. In the left-hand pane, in the Build, Execution, Deployment category, select Application Servers.
-3. Select the server that you are going to use( Choose Tomcat Server for now).
-4. Put the path of tomcat server installation directory under Tomcat_Home or just browse to select it.
-
-### Creating a run/debug configuration
-
-1. Open the Run/Debug Configurations dialog (for example, Run | Edit Configurations).
-2. Click + , select the server of interest (for example, Tomcat Server) and, if available, select Local
-3. Choose the Deployment tab, clicking “+”, and choosing Artifact…
-4. Select Artifact listed then choose Apply and finally OK.
-
-
-#Run Application
+# Teste da aplicação
+Para testes encontra-se disponível os seguintes endereços:
 
 **Exposed REST End Point's**
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/
-http://localhost:8080/RestAPI-2ibi/api/sub-regiao/
-http://localhost:8080/RestAPI-2ibi/api/pais/
+http://meceap.tk:8084/RestAPI-2ibi/api/regiao/
+http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/
 ```
 
-##Region
-**GET List Of All Regions (GET)**
+## Region
+
+### GET List Of All Regions (GET)
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/all
+http://meceap.tk:8084/RestAPI-2ibi/api/regiao/all
 ```
 
-**Response**
+#### Response
 ```
 [
   {
@@ -61,13 +66,13 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/all
 ]
 ```
 
-**GET a Region (GET)**
+### GET a Region (GET)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
 ```
 
-**Response**
+#### Response
 ```
 {
   "id": 1,
@@ -76,13 +81,13 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
 }
 ```
 
-**Add a Region (POST)**
+### Add a Region (POST)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/
+http://meceap.tk:8084/RestAPI-2ibi/api/regiao/
 ```
 
-**Request Body**
+#### Request Body
 ```
 {
     "nome": "Europa",
@@ -90,7 +95,7 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/
 }
 ```
 
-**Response**
+#### Response
 ```
 {
     "id": 1,
@@ -99,13 +104,13 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/
 }
 ```
 
-**Update a Region (PUT)**
+### Update a Region (PUT)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
 ```
 
-**Request Body**
+#### Request Body
 ```
 {
     "id": 1,
@@ -114,34 +119,35 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
 }
 ```
 
-**Response**
+#### Response
 ```
 {
-  "id": "true"
+  "status": "true"
 }
 ```
 
-**Delete a Region (DELETE)**
+### Delete a Region (DELETE)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
 ```
 
-**Response**
+#### Response
 ```
 {
-  "id": "true"
+  "status": "true"
 }
 ```
 
 
-##Sub Region
-**GET List Of All Sub Regions (GET)**
+## Sub Region
+
+### GET List Of All Sub Regions (GET)
 ```
-http://localhost:8080/RestAPI-2ibi/api/sub-regiao/all
+http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/all
 ```
 
-**Response**
+#### Response
 ```
 [
   {
@@ -180,13 +186,13 @@ http://localhost:8080/RestAPI-2ibi/api/sub-regiao/all
 ]
 ```
 
-**GET a Region (GET)**
+### GET a sub Region (GET)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/sub-regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
 ```
 
-**Response**
+#### Response
 ```
 {
   "id": 1,
@@ -201,13 +207,13 @@ http://localhost:8080/RestAPI-2ibi/api/sub-regiao/{id}
 }
 ```
 
-**Add a Region (POST)**
+### Add a sub Region (POST)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/sub-regiao/
+http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/
 ```
 
-**Request Body**
+#### Request Body
 ```
 {
   "regiaoId": 1,
@@ -216,7 +222,7 @@ http://localhost:8080/RestAPI-2ibi/api/sub-regiao/
 }
 ```
 
-**Response**
+#### Response
 ```
 {
   "id": 1,
@@ -231,13 +237,13 @@ http://localhost:8080/RestAPI-2ibi/api/sub-regiao/
 }
 ```
 
-**Update a Region (PUT)**
+### Update a sub Region (PUT)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/sub-regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
 ```
 
-**Request Body**
+#### Request Body
 ```
 {
     "id": 1,
@@ -247,35 +253,33 @@ http://localhost:8080/RestAPI-2ibi/api/sub-regiao/{id}
 }
 ```
 
-**Response**
+#### Response
 ```
 {
   "id": "true"
 }
 ```
 
-**Delete a Region (DELETE)**
+### Delete a sub Region (DELETE)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/sub-regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
 ```
 
-**Response**
+#### Response
 ```
 {
-  "id": "true"
+  "status": "true"
 }
 ```
 
-
-
-##Region
-**GET List Of All Regions (GET)**
+## Country
+### GET List Of All Country (GET)
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/all
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/all
 ```
 
-**Response**
+#### Response
 ```
 [
   {
@@ -299,13 +303,13 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/all
 ]
 ```
 
-**GET a Country (GET)**
+### GET a Country (GET)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
 ```
 
-**Response**
+#### Response
 ```
 {
   "id": 1,
@@ -327,13 +331,13 @@ http://localhost:8080/RestAPI-2ibi/api/regiao/{id}
 }
 ```
 
-**Add a Country (POST)**
+### Add a Country (POST)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/pais/
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/
 ```
 
-**Request Body**
+#### Request Body
 ```
 {
   "subRegiaoId": 1,
@@ -343,7 +347,7 @@ http://localhost:8080/RestAPI-2ibi/api/pais/
 }
 ```
 
-**Response**
+#### Response
 ```
 {
   "id": 1,
@@ -365,13 +369,13 @@ http://localhost:8080/RestAPI-2ibi/api/pais/
 }
 ```
 
-**Update a Country (PUT)**
+### Update a Country (PUT)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/pais/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
 ```
 
-**Request Body**
+#### Request Body
 ```
 {
   "subRegiaoId": 1,
@@ -381,20 +385,20 @@ http://localhost:8080/RestAPI-2ibi/api/pais/{id}
 }
 ```
 
-**Response**
+#### Response
 ```
 {
   "status": "true"
 }
 ```
 
-**Delete a Country (DELETE)**
+### Delete a Country (DELETE)
 
 ```
-http://localhost:8080/RestAPI-2ibi/api/pais/{id}
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
 ```
 
-**Response**
+#### Response
 ```
 {
   "status": "true"
