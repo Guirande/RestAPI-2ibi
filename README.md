@@ -22,11 +22,11 @@ Desenvolver uma API RESTful que permita gerenciar as informações das proprieda
 ```
   git clone https://github.com/Guirande/RestAPI-2ibi.git
 ```
-2. Altere as propriedades do ficheiro `db.properties` do pacote `tk.meceap.db.dao` para a conexao com a base de dados;
-    **Nota:** A aplicação se encarregará de criar a base de dados e respetivas tabelas;
+2. Altere as propriedades do ficheiro `db.properties` do pacote `tk.meceap.db.dao` para a conexao com a base de dados.
+    *A aplicação se encarregará de criar a base de dados e respetivas tabelas;*
 3. Faça a implantação/deploy da aplicação clonada para testes locais;
 4. Faça (limpar e construir)/(clean and building) para obter o arquivo `.war`, arquivo que será usado no gerenciador de servidor tomcat em ambiente de produção;
-5. Faça o upload do arquivo `.war` na pasta `/dist` no servidor tomcat.
+5. Faça o upload do arquivo `.war` da pasta `/dist` do projecto para o servidor tomcat.
 
 # Teste da aplicação
 Para testes encontra-se disponível os seguintes endereços:
