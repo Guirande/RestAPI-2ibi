@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,7 +40,7 @@ public class DAORegiao {
     }
     
     public Regiao get(int id){
-        Regiao regiao = new Regiao();
+        Regiao regiao = null;
         try {
             Connection connection = Conexao.getConexao();
             
@@ -58,26 +59,31 @@ public class DAORegiao {
         return regiao;
     }
     
-    public void addRegiao(Regiao regiao){
+    public Regiao addRegiao(Regiao regiao){
         try {
             Connection connection = Conexao.getConexao();
             
             String query = "INSERT INTO regiao(nome, descricao) VALUES(?,?);";
             
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             
             ps.setString(1, regiao.getNome());
             ps.setString(2, regiao.getDescricao());
             
-            int rs = ps.executeUpdate();
+            ps.execute(); 
+            ResultSet rs = ps.getGeneratedKeys();
             
-            
+            if(rs.next()){
+                regiao.setId(rs.getInt(1));
+                return regiao;
+            }
         } catch (SQLException e) {
             Logger.getLogger(DAORegiao.class.getName()).log(Level.SEVERE, null, e);
         }
+        return null;
     }
     
-    public void updateRegiao(Regiao regiao){
+    public boolean updateRegiao(Regiao regiao){
         try {
             Connection connection = Conexao.getConexao();
             
@@ -91,13 +97,14 @@ public class DAORegiao {
             
             int rs = ps.executeUpdate();
             
-            
+            if(rs > 0) return true;
         } catch (SQLException e) {
             Logger.getLogger(DAORegiao.class.getName()).log(Level.SEVERE, null, e);
         }
+        return false;
     }
     
-    public void deleteRegiao(Regiao regiao){
+    public boolean deleteRegiao(Regiao regiao){
         try {
             Connection connection = Conexao.getConexao();
             
@@ -109,9 +116,10 @@ public class DAORegiao {
             
             int rs = ps.executeUpdate();
             
-            
+            if(rs > 0) return true;
         } catch (SQLException e) {
             Logger.getLogger(DAORegiao.class.getName()).log(Level.SEVERE, null, e);
         }
+        return false;
     }
 }

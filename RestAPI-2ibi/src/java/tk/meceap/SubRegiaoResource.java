@@ -47,7 +47,7 @@ public class SubRegiaoResource {
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -62,7 +62,7 @@ public class SubRegiaoResource {
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -76,15 +76,11 @@ public class SubRegiaoResource {
             
             ServicoSubRegiao servico = new ServicoSubRegiao();
             
-            servico.create(subregiao);
-            
-            subregiao = servico.get(subregiao.getId());
-            
-            String json = "{\"id\":\""+subregiao.getId() + "\"}";
+            String json = new Gson().toJson(servico.create(subregiao));
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -94,16 +90,13 @@ public class SubRegiaoResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateSubRegiao(SubRegiao subregiao, @PathParam("id") int id){
         try {
-            
             subregiao.setId(id);
             
-            new ServicoSubRegiao().update(subregiao);
-                       
-            String json = "{\"id\":\""+subregiao.getId() + "\"}";
+            String json = "{\"status\":\""+ (new ServicoSubRegiao().update(subregiao)) + "\"}";
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -117,14 +110,12 @@ public class SubRegiaoResource {
             SubRegiao subregiao = new SubRegiao();
             
             subregiao.setId(id);
-            
-            new ServicoSubRegiao().delete(subregiao);
                        
-            String json = "{\"id\":\""+subregiao.getId() + "\"}";
+            String json = "{\"status\":\""+ (new ServicoSubRegiao().delete(subregiao)) + "\"}";
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
 }

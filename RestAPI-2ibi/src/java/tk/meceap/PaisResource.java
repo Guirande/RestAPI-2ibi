@@ -47,7 +47,7 @@ public class PaisResource {
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -62,7 +62,7 @@ public class PaisResource {
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -76,15 +76,11 @@ public class PaisResource {
           
             ServicoPais servico = new ServicoPais();
             
-            servico.create(pais);
-            
-            pais = servico.get(pais.getId());
-            
-            String json = "{\"id\":\""+pais.getId() + "\"}";
+            String json = new Gson().toJson(servico.create(pais));
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -97,13 +93,11 @@ public class PaisResource {
             
             pais.setId(id);
             
-            new ServicoPais().update(pais);
-                       
-            String json = "{\"id\":\""+pais.getId() + "\"}";
+            String json = "{\"status\":\""+ (new ServicoPais().update(pais)) + "\"}";
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -118,13 +112,11 @@ public class PaisResource {
             
             pais.setId(id);
             
-            new ServicoPais().delete(pais);
-                       
-            String json = "{\"id\":\""+pais.getId() + "\"}";
+            String json = "{\"status\":\""+ (new ServicoPais().delete(pais)) + "\"}";
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
 }

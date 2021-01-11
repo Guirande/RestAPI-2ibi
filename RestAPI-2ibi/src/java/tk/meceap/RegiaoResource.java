@@ -45,7 +45,7 @@ public class RegiaoResource {
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -60,7 +60,7 @@ public class RegiaoResource {
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -71,15 +71,11 @@ public class RegiaoResource {
         try {
             ServicoRegiao servico = new ServicoRegiao();
             
-            servico.create(regiao);
-            
-            regiao = servico.get(regiao.getId());
-            
-            String json = "{\"id\":\""+regiao.getId() + "\"}";
+            String json = new Gson().toJson(servico.create(regiao));
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -91,14 +87,12 @@ public class RegiaoResource {
         try {
             
             regiao.setId(id);
-            
-            new ServicoRegiao().update(regiao);
-                       
-            String json = "{\"id\":\""+regiao.getId() + "\"}";
+                  
+            String json = "{\"id\":\""+ (new ServicoRegiao().update(regiao)) + "\"}";
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
     
@@ -113,13 +107,11 @@ public class RegiaoResource {
             
             regiao.setId(id);
             
-            new ServicoRegiao().delete(regiao);
-                       
-            String json = "{\"id\":\""+regiao.getId() + "\"}";
+            String json = "{\"status\":\""+(new ServicoRegiao().delete(regiao))+ "\"}";
             
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.SEE_OTHER).entity("Error"+e.toString()).build();
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
     }
 }

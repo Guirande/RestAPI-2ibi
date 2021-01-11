@@ -23,7 +23,7 @@ public class ServicoRegiao {
         return daoRegiao.get(id);
     }
     
-    public void create(Regiao regiao) throws Exception{
+    public Regiao create(Regiao regiao) throws Exception{
         if(regiao == null) throw new NullPointerException("Regiao cant't be null");
         
         if(regiao.getNome()== null || regiao.getNome().length() == 0)
@@ -32,11 +32,11 @@ public class ServicoRegiao {
         if(regiao.getDescricao()== null || regiao.getDescricao().length() == 0)
             throw new Exception("Descricao can't be null");
                         
-        daoRegiao.addRegiao(regiao);
+        return daoRegiao.addRegiao(regiao);
     }
     
     
-    public void update(Regiao regiao) throws Exception{
+    public boolean update(Regiao regiao) throws Exception{
         if(regiao == null) throw new NullPointerException("Regiao cant't be null");
         
         if(regiao.getNome()== null || regiao.getNome().length() == 0)
@@ -45,13 +45,13 @@ public class ServicoRegiao {
         if(regiao.getDescricao()== null || regiao.getDescricao().length() == 0)
             throw new Exception("Descricao can't be null");
         
-        daoRegiao.updateRegiao(regiao);
+        return daoRegiao.updateRegiao(regiao);
     }
     
-    public void delete(Regiao regiao) throws Exception{
+    public boolean delete(Regiao regiao) throws Exception{
         if(regiao == null) throw new NullPointerException("Regiao cant't be null");
          
-        daoRegiao.deleteRegiao(regiao);
+        return daoRegiao.deleteRegiao(regiao);
     }
 
 }

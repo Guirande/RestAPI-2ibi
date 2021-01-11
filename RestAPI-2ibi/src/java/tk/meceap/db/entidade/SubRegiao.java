@@ -77,5 +77,4 @@ public class SubRegiao {
     public String toString() {
         return "SubRegiao{" + "id=" + id + ", regiaoId=" + regiaoId + ", nome=" + nome + ", descricao=" + descricao + ", regiao=" + regiao + '}';
     }
-
 }

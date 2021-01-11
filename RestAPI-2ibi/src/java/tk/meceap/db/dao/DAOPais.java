@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,7 +52,7 @@ public class DAOPais {
     }
     
     public Pais get(int id){
-        Pais pais = new Pais();
+        Pais pais = null;
         DAOSubRegiao daoRegiao = new DAOSubRegiao();
         List<SubRegiao> regioes = daoRegiao.getAll();
         try {
@@ -71,28 +72,33 @@ public class DAOPais {
         return pais;
     }
     
-    public void addPais(Pais pais){
+    public Pais addPais(Pais pais){
         try {
             Connection connection = Conexao.getConexao();
             
             String query = "INSERT INTO pais(sub_regiao_id, nome, capital, area) VALUES(?,?,?,?);";
             
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             
             ps.setInt(1, pais.getSubRegiaoId());
             ps.setString(2, pais.getNome());
             ps.setString(3, pais.getCapital());
             ps.setDouble(4, pais.getArea());
             
-            int rs = ps.executeUpdate();
-            
-            
+            ps.execute(); 
+            ResultSet rs = ps.getGeneratedKeys();
+                        
+            if(rs.next()){
+                pais.setId(rs.getInt(1));
+                return pais;
+            }
         } catch (SQLException e) {
             Logger.getLogger(DAOPais.class.getName()).log(Level.SEVERE, null, e);
         }
+        return null;
     }
     
-    public void updatePais(Pais pais){
+    public boolean updatePais(Pais pais){
         try {
             Connection connection = Conexao.getConexao();
             
@@ -108,13 +114,14 @@ public class DAOPais {
             
             int rs = ps.executeUpdate();
             
-            
+            if(rs > 0) return true;
         } catch (SQLException e) {
             Logger.getLogger(DAOPais.class.getName()).log(Level.SEVERE, null, e);
         }
+        return false;
     }
     
-    public void deletePais(Pais pais){
+    public boolean deletePais(Pais pais){
         try {
             Connection connection = Conexao.getConexao();
             
@@ -126,9 +133,10 @@ public class DAOPais {
             
             int rs = ps.executeUpdate();
             
-            
+            if(rs > 0) return true;
         } catch (SQLException e) {
             Logger.getLogger(DAOPais.class.getName()).log(Level.SEVERE, null, e);
         }
+        return false;
     }
 }

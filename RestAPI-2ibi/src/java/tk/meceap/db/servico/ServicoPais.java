@@ -24,7 +24,7 @@ public class ServicoPais {
         return daoPais.get(id);
     }
     
-    public void create(Pais pais) throws Exception{
+    public Pais create(Pais pais) throws Exception{
         System.out.println("\n\n"+pais);
         if(pais == null) throw new NullPointerException("Pais cant't be null");
         
@@ -37,11 +37,11 @@ public class ServicoPais {
         if(pais.getArea() < 0)
             throw new Exception("Area can't be less than 0");
                         
-        daoPais.addPais(pais);
+        return daoPais.addPais(pais);
     }
     
     
-    public void update(Pais pais) throws Exception{
+    public boolean update(Pais pais) throws Exception{
         System.out.println("\n\n"+pais);
         if(pais == null) throw new NullPointerException("Pais cant't be null");
         
@@ -54,13 +54,13 @@ public class ServicoPais {
         if(pais.getArea() < 0)
             throw new Exception("Area can't be less than 0");
         
-        daoPais.updatePais(pais);
+        return daoPais.updatePais(pais);
     }
     
-    public void delete(Pais pais) throws Exception{
+    public boolean delete(Pais pais) throws Exception{
         if(pais == null) throw new NullPointerException("Pais cant't be null");
          
-        daoPais.deletePais(pais);
+        return daoPais.deletePais(pais);
     }
 
 }
