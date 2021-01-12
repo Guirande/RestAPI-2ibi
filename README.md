@@ -314,7 +314,8 @@ http://meceap.tk:8084/RestAPI-2ibi/api/pais/query
 ```
 
 #### Request Body
-Colunas válidas para a pesquisa: `nome|capital|area|regiao|sub_regiao`;
+Colunas válidas para a pesquisa: `nome|capital|area|regiao|sub_regiao`.
+
 Para ordenar a lista, segue-se  a seguinte expressão regular `order: [column (, column) * (DESC|ASC){0,1}]`.
 
 Para pesquisar com a cláusula where a lista, segue-se  a seguinte expressão regular `where: [column operator value ( (and | or) column operator value ) *]`.
