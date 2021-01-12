@@ -6,12 +6,12 @@ Os Web services RESTful permitem que os sistemas solicitantes acessem e manipule
 Desenvolver uma API RESTful que permita gerenciar as informações das propriedades dos países (identificador – gerado automaticamente, nome, capital, região, sub-região, área).
 
 * Criar um novo país a partir da API criada com todas as suas propriedades;
-* Listar todos os países anteriormente criados;
-* Modificar os dados de um país anteriormente criado;
-* Eliminar um país anteriormente criado;
-* Ordenar a lista dos países por qualquer uma das suas propriedades;
-* Restringir a pesquisa da lista de países por qualquer uma das suas propriedades.
-* Obter um país em específico
+* Listar todos os países, sub-regiões ou regiões anteriormente criados;
+* Modificar os dados de um país, uma sub-região ou região anteriormente criado;
+* Eliminar um país, uma sub-região ou região anteriormente criado;
+* Ordenar a lista dos países, sub-regiões ou regiões por qualquer uma das suas propriedades;
+* Restringir a pesquisa da lista de países por qualquer uma das suas propriedades;
+* Obter um país, uma sub-região ou região em específico pelo identificador.
 
 Para o maior desempenho e integridade da base de dados foi criado duas tabelas extra para o armazenamento de região, e sub-região respectivamente, ilustrado a seguir:
 
@@ -36,17 +36,15 @@ Para o maior desempenho e integridade da base de dados foi criado duas tabelas e
 
 # Teste da aplicação
 Para testes encontra-se disponível os seguintes endereços:
-
-**Exposed REST End Point's**
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/regiao/
 http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/
 http://meceap.tk:8084/RestAPI-2ibi/api/pais/
 ```
 
-## Region
+## Região
 
-### GET List Of All Regions (GET)
+### OBTER Lista de Regiões  (GET)
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/regiao/all
 ```
@@ -72,7 +70,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/regiao/all
 ]
 ```
 
-### GET a Region (GET)
+### OBTER Região pelo identificador (GET)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
@@ -87,7 +85,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
 }
 ```
 
-### Add a Region (POST)
+### ADICIONAR Região (POST)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/regiao/
@@ -110,7 +108,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/regiao/
 }
 ```
 
-### Update a Region (PUT)
+### ACTUALIZAR a Região (PUT)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
@@ -132,7 +130,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
 }
 ```
 
-### Delete a Region (DELETE)
+### ELIMINAR a Região (DELETE)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
@@ -146,9 +144,9 @@ http://meceap.tk:8084/RestAPI-2ibi/api/regiao/{id}
 ```
 
 
-## Sub Region
+## Sub Região
 
-### GET List Of All Sub Regions (GET)
+### OBTER Lista de Sub Regiões (GET)
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/all
 ```
@@ -192,7 +190,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/all
 ]
 ```
 
-### GET a sub Region (GET)
+### OBTER a Sub Região pelo identificador (GET)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
@@ -213,7 +211,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
 }
 ```
 
-### Add a sub Region (POST)
+### ADICIONAR a Sub Região (POST)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/
@@ -243,7 +241,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/
 }
 ```
 
-### Update a sub Region (PUT)
+### ACTUALIZAR a Sub Região (PUT)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
@@ -262,11 +260,11 @@ http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
 #### Response
 ```
 {
-  "id": "true"
+  "status": "true"
 }
 ```
 
-### Delete a sub Region (DELETE)
+### ELIMINAR a Sub Região (DELETE)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
@@ -279,8 +277,8 @@ http://meceap.tk:8084/RestAPI-2ibi/api/sub-regiao/{id}
 }
 ```
 
-## Country
-### GET List Of All Country (GET)
+## PAÍS
+### OBTER Lista de PAÍSES (GET)
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/pais/all
 ```
@@ -309,7 +307,41 @@ http://meceap.tk:8084/RestAPI-2ibi/api/pais/all
 ]
 ```
 
-### GET a Country (GET)
+
+### OBTER Lista de PAÍSES pela pesquisa ordenada ou cláusula where (POST)
+```
+http://meceap.tk:8084/RestAPI-2ibi/api/pais/query
+```
+
+#### Request Body
+```
+{"query":"order:nome ASC;where:capital='Maputo'"}
+```
+#### Response
+```
+[
+  {
+    "id": 1,
+    "subRegiaoId": 1,
+    "nome": "Mozambique",
+    "capital": "Chimoio",
+    "area": 2938.43,
+    "subRegiao": {
+      "id": 1,
+      "regiaoId": 1,
+      "nome": "África Austral",
+      "descricao": "Região de sul da África",
+      "regiao": {
+        "id": 1,
+        "nome": "Áfricas",
+        "descricao": "Continente situado no centro do planeta"
+      }
+    }
+  }
+]
+```
+
+### OBTER PAÍS (GET)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
@@ -337,7 +369,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
 }
 ```
 
-### Add a Country (POST)
+### ADICIONAR PAÍS (POST)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/pais/
@@ -375,7 +407,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/pais/
 }
 ```
 
-### Update a Country (PUT)
+### ACTUALIZAR PAÍS (PUT)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
@@ -398,7 +430,7 @@ http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
 }
 ```
 
-### Delete a Country (DELETE)
+### ELIMINAR PAÍS (DELETE)
 
 ```
 http://meceap.tk:8084/RestAPI-2ibi/api/pais/{id}
