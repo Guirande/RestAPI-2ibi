@@ -34,14 +34,13 @@ public class PaisResource {
      */
     public PaisResource() {
     }
-
-    
+   
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPaises(){
         try {
-            List<Pais> paiss = new ServicoPais().getAll();
+            List<Pais> paiss = new ServicoPais().getAll("", "");
             
             String json = new Gson().toJson(paiss);
             
@@ -49,6 +48,47 @@ public class PaisResource {
         } catch (Exception e) {
             return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
         }
+    }   
+    
+    @POST
+    @Path("query")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOrder(Pais p){
+        try {
+            System.out.println("\n\n"+p);
+            String where = "", order = "", query[] = p.getQuery().split(";");
+            
+            //validColumn: nome, capital, area, regiao, subRegiao
+            if(query.length < 3 && query.length > 0)
+            for (String q : query) {
+                System.err.println(q);
+                if(q.startsWith("where:") && isWhere(q))
+                    where = q.replace("where:", "");
+                if(q.startsWith("order:") && isOrder(q))
+                    order = q.replace("order:", "");
+            }
+            List<Pais> pais = new ServicoPais().getAll(where, order);
+            
+            String json = new Gson().toJson(pais);
+            
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.SEE_OTHER).entity("{\"Error\":\""+e.toString()+"\"").build();
+        }
+    }
+    String validColumn = "(nome|capital|area|regiao|sub_regiao)\\s*";
+    
+    public boolean isWhere(String where){
+        //where: [column operator value ( (and | or) column operator value ) *]
+        String s = "("+validColumn + "(=|>|<|<=|>=|<>)\\s*('[a-zA-Z0-9]*')|(\\d+))";
+        return where.matches("where:\\s*"+ s + "(\\s+(and|or)\\s+" + s + ")*");
+    }
+    
+    public boolean isOrder(String order){
+        //order: [column (, column) * (DESC|ASC){0,1}]; 
+        String s = validColumn;
+        return order.matches( "order:\\s*"+s + "(\\s*,\\s*" + s + ")*(\\s+(DESC|ASC)){0,1}");
     }
     
     @GET

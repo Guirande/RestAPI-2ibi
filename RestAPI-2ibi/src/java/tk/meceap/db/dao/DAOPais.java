@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tk.meceap.db.entidade.Pais;
+import tk.meceap.db.entidade.Regiao;
 import tk.meceap.db.entidade.SubRegiao;
 
 /**
@@ -26,21 +27,30 @@ public class DAOPais {
         return null;
     }
     
-    public List<Pais> getAll(){
+    public List<Pais> getAll(String where, String order){
         List<Pais> paises = new ArrayList<>();
-        DAOSubRegiao daoRegiao = new DAOSubRegiao();
-        List<SubRegiao> regioes = daoRegiao.getAll();
         try {
             Connection connection = Conexao.getConexao();
             
-            String query = "select * from pais;";
+            String query = "SELECT r.nome as regiao, r.descricao as desc_regiao, sr.regiao_id, sr.nome as sub_regiao, sr.descricao as desc_sub_regiao, p.* "
+                    + "FROM pais p "
+                    + "INNER JOIN sub_regiao sr ON p.sub_regiao_id = sr.id "
+                    + "INNER JOIN regiao r ON sr.regiao_id = r.id ";
+            if(!where.isEmpty())
+                query += " where " + where;
+            if(!order.isEmpty())
+                query += " order by " + order;
+            
+            System.out.println(query);
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             
             Pais pais;
             
             while (rs.next()) {
-                pais = new Pais(rs.getInt("id"), rs.getString("nome"), rs.getString("capital"), rs.getDouble("area"), getSubRegiao(regioes, rs.getInt("sub_regiao_id")));
+                pais = new Pais(rs.getInt("id"), rs.getString("nome"), rs.getString("capital"), rs.getDouble("area"), null, 
+                            new SubRegiao(rs.getInt("sub_regiao_id"), rs.getString("sub_regiao"), rs.getString("desc_sub_regiao"), 
+                                new Regiao(rs.getInt("regiao_id"), rs.getString("regiao"), rs.getString("desc_regiao"))));
                 
                 paises.add(pais);
                 
@@ -53,18 +63,22 @@ public class DAOPais {
     
     public Pais get(int id){
         Pais pais = null;
-        DAOSubRegiao daoRegiao = new DAOSubRegiao();
-        List<SubRegiao> regioes = daoRegiao.getAll();
         try {
             Connection connection = Conexao.getConexao();
             
-            String query = "select * from pais where id="+id+";";
+            String query = "SELECT r.nome as regiao, r.descricao as desc_regiao, sr.regiao_id, sr.nome as sub_regiao, sr.descricao as desc_sub_regiao, p.* "
+                    + "FROM pais p "
+                    + "INNER JOIN sub_regiao sr ON p.sub_regiao_id = sr.id "
+                    + "INNER JOIN regiao r ON sr.regiao_id = r.id  where id="+id+";";
             
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
                         
             while (rs.next()) {
-                pais = new Pais(rs.getInt("id"), rs.getString("nome"), rs.getString("capital"), rs.getDouble("area"), getSubRegiao(regioes, rs.getInt("sub_regiao_id")));
+                pais = new Pais(rs.getInt("id"), rs.getString("nome"), rs.getString("capital"), rs.getDouble("area"), null, 
+                            new SubRegiao(rs.getInt("sub_regiao_id"), rs.getString("sub_regiao"), rs.getString("desc_sub_regiao"), 
+                                new Regiao(rs.getInt("regiao_id"), rs.getString("regiao"), rs.getString("desc_regiao"))));
+                
             }
         } catch (Exception e) {
             Logger.getLogger(DAOPais.class.getName()).log(Level.SEVERE, null, e);

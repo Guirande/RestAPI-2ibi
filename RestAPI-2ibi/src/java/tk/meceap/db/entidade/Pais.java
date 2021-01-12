@@ -11,30 +11,33 @@ public class Pais {
     private int subRegiaoId;
     private String nome;
     private String capital;
+    private String query;
     private Double area;
     private SubRegiao subRegiao;
 
     public Pais() {
     }
 
-    public Pais(int id, String nome, String capital, Double area, SubRegiao subRegiao) {
+    public Pais(int id, String nome, String capital, Double area, String query, SubRegiao subRegiao) {
         this.id = id;
         this.nome = nome;
         this.capital = capital;
         this.area = area;
         this.subRegiao = subRegiao;
+        this.query = query;
         this.subRegiaoId = subRegiao.getId();
     }
 
-    public Pais(int id, int subRegiao, String nome, String capital, Double area) {
+    public Pais(int id, int subRegiao, String nome, String capital, Double area, String query) {
         DAOSubRegiao daoSubRegiao = new DAOSubRegiao();
         this.id = id;
         this.nome = nome;
         this.capital = capital;
+        this.query = query;
         this.area = area;
         this.subRegiao = daoSubRegiao.get(subRegiao);
     }
-
+    
     public int getId() {
         return id;
     }
@@ -61,6 +64,14 @@ public class Pais {
 
     public String getCapital() {
         return capital;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public void setCapital(String capital) {

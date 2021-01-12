@@ -16,8 +16,8 @@ public class ServicoPais {
         daoPais = new DAOPais();
     }
     
-    public List<Pais> getAll(){
-        return daoPais.getAll();
+    public List<Pais> getAll(String where, String order){
+        return daoPais.getAll(where, order);
     }
     
     public Pais get(int id){
