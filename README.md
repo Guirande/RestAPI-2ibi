@@ -15,7 +15,7 @@ Desenvolver uma API RESTful que permita gerenciar as informações das proprieda
 
 Para o maior desempenho e integridade da base de dados foi criado duas tabelas extra para o armazenamento de região, e sub-região respectivamente, ilustrado a seguir:
 
-<img align="center" src="MER.PNG" alt="MER" >
+<img align="center" src="RestAPI-2ibi/MER.PNG" alt="MER" >
 
 # Requisitos
 1. Java 8
