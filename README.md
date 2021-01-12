@@ -314,8 +314,27 @@ http://meceap.tk:8084/RestAPI-2ibi/api/pais/query
 ```
 
 #### Request Body
+Para ordenar a lista, segue-se  a seguinte expressão regular `order: [column (, column) * (DESC|ASC){0,1}]`.
+
+Para pesquisar com a cláusula where a lista, segue-se  a seguinte expressão regular `where: [column operator value ( (and | or) column operator value ) *]`.
+
+Para unir as duas pesquisas é necessário separalos por `;` (ponto e vírgula).
 ```
-{"query":"order:nome ASC;where:capital='Maputo'"}
+{
+  "query": "order:nome ASC;where:capital='Maputo'"
+}
+```
+Ou pesquisa individual ordenada
+```
+{
+  "query": "order:nome ASC"
+}
+```
+Ou pesquisa individual pela cláusula where
+```
+{
+  "query": "where:capital='Maputo'"
+}
 ```
 #### Response
 ```
