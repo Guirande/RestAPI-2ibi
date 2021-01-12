@@ -5,11 +5,17 @@ Os Web services RESTful permitem que os sistemas solicitantes acessem e manipule
 # Objectivos
 Desenvolver uma API RESTful que permita gerenciar as informações das propriedades dos países (identificador – gerado automaticamente, nome, capital, região, sub-região, área).
 
-* Deve ser possível criar um novo país a partir da API criada com todas as suas propriedades;
-* Deve ser possível listar todos os países anteriormente criados;
-* Deve ser possível modificar os dados de um país anteriormente criado;
-* Deve ser possível eliminar um país anteriormente criado;
-* Deve ser possível ordenar a lista dos países por qualquer uma das suas propriedades.
+* Criar um novo país a partir da API criada com todas as suas propriedades;
+* Listar todos os países anteriormente criados;
+* Modificar os dados de um país anteriormente criado;
+* Eliminar um país anteriormente criado;
+* Ordenar a lista dos países por qualquer uma das suas propriedades;
+* Restringir a pesquisa da lista de países por qualquer uma das suas propriedades.
+* Obter um país em específico
+
+Para o maior desempenho e integridade da base de dados foi criado duas tabelas extra para o armazenamento de região, e sub-região respectivamente, ilustrado a seguir:
+
+<img align="center" src="MER.PNG" alt="MER" >
 
 # Requisitos
 1. Java 8
