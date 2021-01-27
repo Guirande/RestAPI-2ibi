@@ -64,7 +64,10 @@ public class PaisResource {
             for (String q : query) {
                 System.err.println(q);
                 if(q.startsWith("where:") && isWhere(q))
-                    where = q.replace("where:", "");
+                    where = q.replace("where:", "")
+                                .replace("nome", "pais.nome")
+                                .replace("regiao", "regiao.nome")
+                                .replace("sub_regiao", "sub_regiao.nome");
                 if(q.startsWith("order:") && isOrder(q))
                     order = q.replace("order:", "");
             }
